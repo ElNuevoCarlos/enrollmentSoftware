@@ -1,19 +1,35 @@
 package controller;
 
 import application.Main;
+import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class MainMenuController {
+	@FXML private BorderPane rootPane;
 	
     public void goToStudents() {
-        Main.loadView("Students.fxml");
+    	// CIERRA LA VENTANA ACTUAL
+        Stage currentStage = (Stage) rootPane.getScene().getWindow();
+        currentStage.close();
+        // CIERRA LA VENTANA ACTUAL
+        Main.loadView("/view/Students.fxml");
     }
 
     public void goToCourses() {
-        Main.loadView("Courses.fxml");
+    	// CIERRA LA VENTANA ACTUAL
+        Stage currentStage = (Stage) rootPane.getScene().getWindow();
+        currentStage.close();
+        // CIERRA LA VENTANA ACTUAL
+        Main.loadView("/view/Courses.fxml");
     }
 
     public void goToEnrollment() {
-        Main.loadView("Enrollments.fxml");
+    	// CIERRA LA VENTANA ACTUAL
+        Stage currentStage = (Stage) rootPane.getScene().getWindow();
+        currentStage.close();
+        // CIERRA LA VENTANA ACTUAL
+        Main.loadView("/view/Enrollments.fxml");
     }
 
 }

@@ -1,6 +1,10 @@
 package data;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.Course;;
 
@@ -18,8 +22,25 @@ public class CourseDAO implements CRUD_Operation<Course,String> {
 
 	@Override
 	public ArrayList<Course> fetch() {
-		// TODO Auto-generated method stub
-		return null;
+        ArrayList<Course> courses = new ArrayList<>();
+        String query = "SELECT * FROM COURSE";
+        
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            
+            while (rs.next()) {
+                String code = rs.getString("code");
+                String name = rs.getString("name");
+                int credits = rs.getInt("credits");
+                
+                Course article = new Course(code, name, credits);
+                courses.add(article);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
 	}
 
 	@Override
@@ -29,9 +50,14 @@ public class CourseDAO implements CRUD_Operation<Course,String> {
 	}
 
 	@Override
-	public void delete(String id) {
-		// TODO Auto-generated method stub
-		
+	public void delete(String code) {
+		String sql = "DELETE FROM COURSE WHERE CODE=?";
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, code);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
